@@ -1,0 +1,42 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[croatian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{Luka Skukan}
+\title{Ra\v{c}unalna Grafika\\Druga Laboratorijska Vje\v{z}ba}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Struktura i funkcionalnost koda}
+Laboratorijska vje\v{z}ba implementirana je u programskome jeziku C++, uz kori\v{s}tenje biblioteke OpenGL. Uz najosnovnije elemente jezika i biblioteke OpenGL, u implementaciji se koristi i struktura \texttt{vector<T>}, kao i razredi \texttt{string}, \texttt{stringstream}, te \texttt{fstream}.
+
+\noindent
+Kod programa podjeljen je u nekoliko datoteka:
+
+\begin{itemize}
+    \item \texttt{point.cpp} -- Implementacija 3D to\v{c}ke/vektora, sa nekoliko standardnih vektorskih operacija. Sadr\v{z}i i funkcionalnost u\v{c}itavanja to\v{c}aka iz datoteke, kao i skaliranje grupe to\v{c}aka na raspon $[0, 1]$.
+	\item \texttt{particles.cpp} -- Implementacija izvora \v{c}estica, odnosno generacije \v{c}estica (grupe \v{c}estica koje se stvaraju i umiru u isto vrijeme).
+    \item \texttt{lab.cpp} -- Glavni program. Postavlja po\v{c}etne vrijednosti i registrira potrebne OpenGL handlere i postavke. Koristi sve ostale datoteke, direktno ili indirektno.
+\end{itemize}
+
+Svo u\v{c}itavanje i izra\v{c}uni doga\dj{}aju se prilikom pokrenja programa, u ovisnosti u \emph{harkodiranim} parametrima. Pokretanjem programa prikazuje se izvor, koji se mo\v{z}e pomicati i stvarati \v{c}estice na pritisak tipke. Detaljnije upute dane su u zadnjem odjeljku.
+
+\section{Implementacijske promjene i problemi}
+
+Pri implementaciji, poku\v{s}aji u\v{c}itavanja tekstura raznim metodama rezultirali su segmentacijskom gre\v{s}kom unutar sistemske biblioteke (isprobano kori\v{s}tenjem alata \texttt{gdb}). Umjesto tekstura kori\v{s}tene su obi\v{c}ne \v{c}estice, \v{s}to je ka\v{z}njeno oduzimanjem jednog boda.
+
+Implementiran je pomi\v{c}ni izvor \v{c}estica (kre\'{c}e se po spirali iz prve laboratorijske vje\v{z}be) kod kojega \v{c}estice vr\v{s}e promjenu boje kroz starenje. Zapo\v{c}inju kao \v{c}estice crvene boje, te preko naran\v{c}aste i \v{z}ute prelaze u zelenu, te kona\v{c}no plavu boju, prije nego nestaju.
+
+Programski kod laboratorijske vje\v{z}be izgubljen je pogre\v{s}kom autora (slu\v{c}ajno brisanje krivoga direktorija).
+
+\section{Upute za kori\v{s}tenje}
+
+Izvr\v{s}iva datoteka generira se pozivanjem naredbe \texttt{make}. Prilo\v{z}en je pripadni \emph{Makefile}. Ukoliko naredba ne radi, \emph{Makefile} se mo\v{z}e otvoriti i direktno prepisati i pozvati naredba u njemu. Pritom se generira datoteke \emph{animation}, koja se potom mo\v{z}e pokrenuti. Kod je pisan i testiran u operacijskom sustavu \emph{Ubuntu}, odnosno \emph{Linux}, ali teoretski bi trebao raditi i na drugim operacijskim sustavima (\emph{OS X}, \emph{Windows}). Ipak, to nije isprobano.
+
+Prilikom pokretanja generirane datoteke \emph{animation}, prikazuje se prozor sa iscrtanim izvorom \v{c}estica. Korisnik mo\v{z} promjeniti poziciji o\v{c}i\v{s}ta kori\v{s}tenjem tipki \texttt{Q}, \texttt{W}, \texttt{E}, \texttt{A}, \texttt{S}, te \texttt{D}. Te tipke vr\v{s}e pomicanje o\v{c}i\v{s}ta po nekoj od koordinatnih osi za korak $0.1$. Kona\v{c}no, animacija izvora, odnosno njegovog pomicanja po putanji i stvaranja \v{c}estica, vr\v{s}i se pritiskom tipke \texttt{M}. Ukoliko se \v{z}eli prikazati animacija gibanja, tipka se dr\v{z}i pritisnutom.
+
+\end{document}

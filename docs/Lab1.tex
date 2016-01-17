@@ -1,0 +1,42 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[croatian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{Luka Skukan}
+\title{Ra\v{c}unalna Grafika\\Prva Laboratorijska Vje\v{z}ba}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Struktura i funkcionalnost koda}
+Laboratorijska vje\v{z}ba implementirana je u programskome jeziku C++, uz kori\v{s}tenje biblioteke OpenGL. Uz najosnovnije elemente jezika i biblioteke OpenGL, u implementaciji se koristi i struktura \texttt{vector<T>}, kao i razredi \texttt{string}, \texttt{stringstream}, te \texttt{fstream}.
+
+\noindent
+Kod programa podjeljen je u nekoliko datoteka:
+
+\begin{itemize}
+    \item \texttt{point.cpp} -- Implementacija 3D to\v{c}ke/vektora, sa nekoliko standardnih vektorskih operacija. Sadr\v{z}i i funkcionalnost u\v{c}itavanja to\v{c}aka iz datoteke, kao i skaliranje grupe to\v{c}aka na raspon $[0, 1]$.
+    \item \texttt{face.cpp} -- Implementacija trokuta definiranog trima to\v{c}kama, kao u \texttt{.obj} zapisu. Podr\v{z}ava u\v{c}itavanje istih iz datoteke.
+    \item \texttt{renderable.cpp} -- Implementacija prikazivog objekta definiranog (opcionalno) imenom, skupom to\v{c}aka, te licima (trokutima iz \texttt{face.cpp}. Izme\dj{}u ostalog, podr\v{z}ava u\v{c}itavanje takvog objekta iz \texttt{.obj} datoteke, normalizaciju na $[0, 1$], te centriranje tako da centar objekta bude u to\v{c}ki $(0, 0, 0)$. Koristi \texttt{point.cpp} i \texttt{face.cpp}.
+    \item \texttt{segment.cpp} -- Implementacija izra\v{c}una segmenata za B-splajn aproksimaciju iz skupa to\v{c}aka. Sadr\v{z}i i funkcionalnosti izra\v{c}una to\v{c}ke i tangente za segment $\vec{r}_i$ i vrijednost parametra $t$. Koristi \texttt{point.cpp}.
+    \item \texttt{lab.cpp} -- Glavni program. Postavlja po\v{c}etne vrijednosti i registrira potrebne OpenGL handlere i postavke. Koristi sve ostale datoteke, direktno ili indirektno.
+\end{itemize}
+
+Svo u\v{c}itavanje i izra\v{c}uni doga\dj{}aju se prilikom pokrenja programa, u ovisnosti u \emph{harkodiranim} parametrima. Prije prikaza izra\v{c}unavaju se potrebne B-splajn vrijednosti (to\v{c}ke i tangente). Potom se prikazuje objekt, te se mo\v{z}e pomicati. Detaljnije upute dane su u uputama za kori\v{s}tenje.
+
+\section{Implementacijske promjene i problemi}
+
+Pri implementaciji nije bilo svijesnih devijacija od uputa. Kori\v{s}ten je na\v{c}in implementacije rotacije i translacije opisan u \textbf{1.4}.
+
+Manji problemi s implementacijom su kriva orijentacija objekta, te, u jednom segmentu krivulje, pojavljivanje fenomena \emph{Gimbal lock}.
+
+\section{Upute za kori\v{s}tenje}
+
+Izvr\v{s}iva datoteka generira se pozivanjem naredbe \texttt{make}. Prilo\v{z}en je pripadni \emph{Makefile}. Ukoliko naredba ne radi, \emph{Makefile} se mo\v{z}e otvoriti i direktno prepisati i pozvati naredba u njemu. Pritom se generira datoteke \emph{animation}, koja se potom mo\v{z}e pokrenuti. Kod je pisan i testiran u operacijskom sustavu \emph{Ubuntu}, odnosno \emph{Linux}, ali teoretski bi trebao raditi i na drugim operacijskim sustavima (\emph{OS X}, \emph{Windows}). Ipak, to nije isprobano.
+
+Prilikom pokretanja generirane datoteke \emph{animation}, prikazuje se prozor sa iscrtanim objektom, koordinatnim osima, putanjom u\v{c}itanom iz datoteke, te tangentama na putanju. Korisnik mo\v{z} promjeniti poziciji o\v{c}i\v{s}ta kori\v{s}tenjem tipki \texttt{Q}, \texttt{W}, \texttt{E}, \texttt{A}, \texttt{S}, te \texttt{D}. Te tipke vr\v{s}e pomicanje o\v{c}i\v{s}ta po nekoj od koordinatnih osi za korak $0.1$. Kona\v{c}no, animacija objekta, odnosno njegovog pomicanja po putanji, vr\v{s}i se pritiskom tipke \texttt{M}. Ukoliko se \v{z}eli prikazati animacija gibanja, tipka se dr\v{z}i pritisnutom.
+
+\end{document}
